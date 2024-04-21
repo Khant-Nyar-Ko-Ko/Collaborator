@@ -1,4 +1,8 @@
-const AdminCard = () => {
+interface AdminCardProp {
+  totalPercentage: number;
+}
+
+const AdminCard: React.FC<AdminCardProp> = ({totalPercentage}) => {
   return (
     <>
       <div className="px-4 py-3 h-[70px] flex justify-between items-center bg-white mx-10 rounded shadow">
@@ -10,7 +14,7 @@ const AdminCard = () => {
           </p>
         </div>
         <div className=" mx-10">
-          <p className=" font-semibold">100%</p>
+          <p className=" font-semibold">{totalPercentage}%</p>
         </div>
       </div>
     </>
