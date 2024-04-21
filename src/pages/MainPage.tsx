@@ -2,8 +2,9 @@ import Collab from "../components/Collab"
 import Navbar from "../components/Navbar"
 
 const MainPage = () => {
+
   return (
-    <div className=" grid grid-cols-6 w-screen bg-slate-50 h-screen">
+    <div className=" grid grid-cols-6 w-screen bg-slate-50 h-screen relative">
       <Navbar/>
       <Collab/>
     </div>

@@ -10,7 +10,7 @@ const AdminCard = () => {
           </p>
         </div>
         <div className=" mx-10">
-            <p className=" font-semibold">100%</p>
+          <p className=" font-semibold">100%</p>
         </div>
       </div>
     </>
