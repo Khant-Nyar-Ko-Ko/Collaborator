@@ -29,6 +29,13 @@ const Collab : React.FC = () => {
       totalPercentageRef.current = 0;
     }
   };
+
+  const handleDelete = (index : number) => {
+    const deletedPercentage = data[index].percentage;
+    const newData = data.filter((_,i) => i !== index);
+    setData(newData);
+    totalPercentageRef.current += deletedPercentage;
+  }
   
   
 
@@ -48,7 +55,7 @@ const Collab : React.FC = () => {
         <p className=" ">Percentage</p>
       </div>
       <AdminCard totalPercentage={totalPercentageRef.current} />
-      <AddMember data={data} />
+      <AddMember data={data} onDelete={handleDelete} />
       </div>
       <AddModal addData={addData}/>
     </div>

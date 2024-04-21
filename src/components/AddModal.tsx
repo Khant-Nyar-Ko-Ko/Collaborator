@@ -61,6 +61,8 @@ const AddModal: React.FC<AddModalProps> = ({ addData }) => {
               type="number"
               className=" w-[200px] bg-slate-100"
               value={percentage}
+              min={0}
+              max={100}
               onChange={handleChangePercentage}
             />
           </div>

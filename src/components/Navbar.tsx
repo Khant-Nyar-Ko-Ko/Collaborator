@@ -29,7 +29,7 @@ const Navbar = () => {
     <div className=" col-span-1 bg-blue-900">
       <div>
         <h2 className=" text-white text-2xl font-serif text-center my-5">
-          Toe Tet
+          Wayne Enterprise
         </h2>
         <hr />
       </div>
