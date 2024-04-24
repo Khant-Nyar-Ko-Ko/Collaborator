@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface CollaboratorData {
   name: string;
@@ -7,18 +7,37 @@ interface CollaboratorData {
 
 interface AddMemberProps {
   data: CollaboratorData[];
-  onDelete : (index : number) => void;
+  onDelete: (index: number) => void;
+  onUpdatePercentage: (index: number, percentage: number) => void;
 }
 
 const AddMember: React.FC<AddMemberProps> = (
-  { data, onDelete },
+  { data, onDelete, onUpdatePercentage },
   props: React.SVGProps<SVGSVGElement>
 ) => {
   const [isHovering, setIsHovering] = useState(false);
+  const [isToggleEdit, setIsToggleEdit] = useState<boolean>(false);
+  const [editValue, setEditValue] = useState("");
+
+  const handleEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditValue(e.target.value);
+  };
+
+  const handleToggleEdit = () => {
+    setIsToggleEdit(!isToggleEdit);
+    setEditValue("");
+  };
+
+  const handleSaveEdit = (index: number) => {
+    const newPercentage =
+      editValue === "" ? data[index].percentage : parseFloat(editValue);
+    onUpdatePercentage(index, newPercentage); // Call parent function to update percentage
+    setIsToggleEdit(false);
+  };
 
   return (
     <>
-      {data.map((collaborator, index) => (
+      {data.map((collaborator: CollaboratorData, index: number) => (
         <div
           key={index}
           className="px-4 py-3 h-[70px] flex justify-between items-center bg-white mx-10 mt-5 rounded shadow group"
@@ -34,7 +53,7 @@ const AddMember: React.FC<AddMemberProps> = (
           </div>
           <div className="mx-10 flex gap-5 ">
             <button
-            onClick={() => onDelete(index)}
+              onClick={() => onDelete(index)}
               className={`hidden ${
                 isHovering ? "block" : "hidden"
               } text-red-500  px-2 group-hover:block hover:block`}
@@ -53,7 +72,33 @@ const AddMember: React.FC<AddMemberProps> = (
                 />
               </svg>
             </button>
-            <p className="font-semibold">{collaborator.percentage}%</p>
+            {!isToggleEdit && (
+              <p onClick={handleToggleEdit} className="font-semibold">
+                {editValue == "" ? collaborator.percentage : editValue}%
+              </p>
+            )}
+            {isToggleEdit && (
+              <form
+                action=""
+                className=" font-semibold"
+                onSubmit={handleToggleEdit}
+              >
+                <input
+                  type="text"
+                  value={editValue}
+                  onChange={handleEdit}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleSaveEdit(index);
+                    }
+                  }}
+                  className="w-10 bg-slate-10"
+                />
+
+                <label htmlFor="">%</label>
+              </form>
+            )}
           </div>
         </div>
       ))}

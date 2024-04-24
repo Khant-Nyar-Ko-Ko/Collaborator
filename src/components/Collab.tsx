@@ -30,12 +30,23 @@ const Collab : React.FC = () => {
     }
   };
 
-  const handleDelete = (index : number) => {
+  const handleDelete : (index : number)  => void = (index) => {
     const deletedPercentage = data[index].percentage;
     const newData = data.filter((_,i) => i !== index);
     setData(newData);
     totalPercentageRef.current += deletedPercentage;
   }
+
+  const handleUpdatePercentage = (index: number, newPercentage: number) => {
+    const oldPercentage = data[index].percentage;
+    const diff = newPercentage - oldPercentage;
+    if (diff <= totalPercentageRef.current) {
+      const newData = [...data];
+      newData[index].percentage = newPercentage;
+      setData(newData);
+      totalPercentageRef.current -= diff;
+    }
+  };
   
   
 
@@ -54,8 +65,8 @@ const Collab : React.FC = () => {
         <p className="">Expert Name</p>
         <p className=" ">Percentage</p>
       </div>
-      <AdminCard totalPercentage={totalPercentageRef.current} />
-      <AddMember data={data} onDelete={handleDelete} />
+      <AdminCard totalPercentage={totalPercentageRef.current}  />
+      <AddMember data={data} onDelete={handleDelete} onUpdatePercentage={handleUpdatePercentage} />
       </div>
       <AddModal addData={addData}/>
     </div>
